@@ -8,10 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Alec Room.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 0
+    path: Assets/Samples/XR Interaction Toolkit/2.5.2/Starter Assets/DemoScene.unity
+    guid: 319dafa5c80f29f428dc1e0d03f04177
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: ed72be55522c8448bae8b0d66fa21adf,
       type: 2}
     WebXR.Settings: {fileID: 11400000, guid: 3c45976f55a5a48459a54ec3ffa89c23, type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: a4ad5920a2dab43c39dd91061896d5b0,
+      type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: ad4050bc0deda4e238354e959df0f1f4,
       type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: b53b89ca9241447b0a56ff61fa931615,
