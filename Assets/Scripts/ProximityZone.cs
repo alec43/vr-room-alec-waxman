@@ -1,27 +1,41 @@
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class ProximityZone : MonoBehaviour
 {
-    [Tooltip("The target object to measure distance to")]
+    [Tooltip("The target object (sphere) to measure distance to")]
     public Transform targetObject;
 
-    private Transform player;
+    private void Start()
+    {
+        // Ensure the BoxCollider is set as a trigger
+        BoxCollider box = GetComponent<BoxCollider>();
+        if (!box.isTrigger)
+        {
+            Debug.LogWarning("BoxCollider is not set as a trigger. Setting isTrigger = true.");
+            box.isTrigger = true;
+        }
+
+        if (targetObject == null)
+        {
+            Debug.LogError("Target object is not assigned!");
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            player = other.transform;
-            Debug.Log("Player entered the zone!");
-            CalculateDistance();
+            Debug.Log("Player entered the proximity zone!");
+            LogDistance(other.transform);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player") && player != null)
+        if (other.CompareTag("Player"))
         {
-            CalculateDistance();
+            LogDistance(other.transform);
         }
     }
 
@@ -29,16 +43,15 @@ public class ProximityZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            player = null;
-            Debug.Log("Player left the zone!");
+            Debug.Log("Player left the proximity zone!");
         }
     }
 
-    private void CalculateDistance()
+    private void LogDistance(Transform playerTransform)
     {
-        if (targetObject == null || player == null) return;
+        if (targetObject == null || playerTransform == null) return;
 
-        float distance = Vector3.Distance(player.position, targetObject.position);
+        float distance = Vector3.Distance(playerTransform.position, targetObject.position);
         Debug.Log($"Distance to target: {distance:F2} meters");
     }
 }
