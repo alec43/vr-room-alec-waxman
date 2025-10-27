@@ -24,7 +24,8 @@ public class ProximityZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        Debug.Log("Object has entered");
+        if (other.CompareTag("MainCamera"))
         {
             Debug.Log("Player entered the proximity zone!");
             LogDistance(other.transform);
@@ -33,7 +34,7 @@ public class ProximityZone : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("MainCamera"))
         {
             LogDistance(other.transform);
         }
@@ -41,7 +42,7 @@ public class ProximityZone : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("MainCamera"))
         {
             Debug.Log("Player left the proximity zone!");
         }
