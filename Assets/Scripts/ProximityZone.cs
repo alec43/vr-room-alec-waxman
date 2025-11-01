@@ -1,10 +1,23 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(BoxCollider))]
 public class ProximityZone : MonoBehaviour
 {
     [Tooltip("The target object (sphere) to measure distance to")]
     public Transform targetObject;
+
+    private Coroutine pulseCoroutine;
+    public enum ProximityState
+    {
+        Idle,
+        EnteredZone,
+        MeasuringDistanceEnter,
+        Triggered,
+        MeasuringDistanceExit,
+        ExitedZone
+    }
+    public ProximityState currentState = ProximityState.Idle;
 
     private void Start()
     {
@@ -58,17 +71,28 @@ public class ProximityZone : MonoBehaviour
         Debug.Log($"Distance to target: {distance:F2} meters");
     }
 
-    public enum ProximityState
+    private void StartPulsing()
     {
-        Idle,
-        EnteredZone,
-        MeasuringDistanceEnter,
-        Triggered,
-        MeasuringDistanceExit,
-        ExitedZone
+        if (pulseCoroutine == null && targetObject != null)
+        {
+            pulseCoroutine = StartCoroutine(PulseScale(targetObject, 0.8f, 1.2f, 1f));
+        }
     }
 
-    public ProximityState currentState = ProximityState.Idle;
+    private void StopPulsing()
+    {
+        if (pulseCoroutine != null)
+        {
+            StopCoroutine(pulseCoroutine);
+            pulseCoroutine = null;
+            if (targetObject != null)
+            {
+                targetObject.localScale = Vector3.one; // Reset scale
+            }
+        }
+    }
+
+
 
     private void Update()
     {
@@ -77,6 +101,7 @@ public class ProximityZone : MonoBehaviour
         {
             case ProximityState.Idle:
                 // Waiting for player to enter the zone
+                StopPulsing();
                 break;
 
             case ProximityState.EnteredZone:
@@ -88,6 +113,7 @@ public class ProximityZone : MonoBehaviour
             case ProximityState.MeasuringDistanceEnter:
                 // LogDistance(gameObject.transform);
                 // Debug.Log((Camera.main.transform.position - gameObject.transform.position).magnitude.ToString());
+                StopPulsing();
                 if ((Camera.main.transform.position - gameObject.transform.position).magnitude < 1f)
                 {
                     // If the player is close enough to the target object, transition to Triggered
@@ -100,6 +126,7 @@ public class ProximityZone : MonoBehaviour
             case ProximityState.Triggered:
                 // Triggered state logic
                 // Debug.Log("Unity event triggered!");
+                StartPulsing();
                 currentState = ProximityState.MeasuringDistanceExit;
                 break;
 
@@ -123,6 +150,27 @@ public class ProximityZone : MonoBehaviour
                 break;
         }
         // This method can be used for additional logic if needed
+    }
+
+    private IEnumerator PulseScale(Transform obj, float minScale, float maxScale, float speed)
+    {
+        float t = 0f;
+        bool growing = true;
+
+        while (true)
+        {
+            t += Time.deltaTime * speed;
+            float scale = growing ? Mathf.Lerp(minScale, maxScale, t) : Mathf.Lerp(maxScale, minScale, t);
+            obj.localScale = Vector3.one * scale;
+
+            if (t >= 1f)
+            {
+                t = 0f;
+                growing = !growing;
+            }
+
+            yield return null;
+        }
     }
 
 }
