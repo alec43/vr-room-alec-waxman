@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Video;
 
 [RequireComponent(typeof(BoxCollider))]
 public class ProximityZone : MonoBehaviour
@@ -7,7 +8,13 @@ public class ProximityZone : MonoBehaviour
     [Tooltip("The target object (sphere) to measure distance to")]
     public Transform targetObject;
 
-    private Coroutine pulseCoroutine;
+    // private Coroutine pulseCoroutine;
+
+    public VideoPlayer videoPlayer;
+
+    public GameObject videoQuad; // The animated version
+
+    public GameObject imageQuad;
     public enum ProximityState
     {
         Idle,
@@ -32,6 +39,12 @@ public class ProximityZone : MonoBehaviour
         if (targetObject == null)
         {
             Debug.LogError("Target object is not assigned!");
+        }
+
+        if (videoQuad != null)
+        {
+            videoPlayer = videoQuad.GetComponent<VideoPlayer>();
+            videoQuad.SetActive(false); // start hidden
         }
     }
 
@@ -71,37 +84,70 @@ public class ProximityZone : MonoBehaviour
         Debug.Log($"Distance to target: {distance:F2} meters");
     }
 
-    private void StartPulsing()
+    // private void StartPulsing()
+    // {
+    //     if (pulseCoroutine == null && targetObject != null)
+    //     {
+    //         pulseCoroutine = StartCoroutine(PulseScale(targetObject, 0.8f, 1.2f, 1f));
+    //     }
+    // }
+
+    // private void StopPulsing()
+    // {
+    //     if (pulseCoroutine != null)
+    //     {
+    //         StopCoroutine(pulseCoroutine);
+    //         pulseCoroutine = null;
+    //         if (targetObject != null)
+    //         {
+    //             targetObject.localScale = Vector3.one; // Reset scale
+    //         }
+    //     }
+    // }
+
+    private void StartVideo()
     {
-        if (pulseCoroutine == null && targetObject != null)
+        if (videoQuad != null)
         {
-            pulseCoroutine = StartCoroutine(PulseScale(targetObject, 0.8f, 1.2f, 1f));
+            videoQuad.SetActive(true);
+            imageQuad.SetActive(false);
+
+            if (videoPlayer != null && !videoPlayer.isPlaying)
+                videoPlayer.Play();
         }
     }
 
-    private void StopPulsing()
+    private void StopVideo()
     {
-        if (pulseCoroutine != null)
+        if (videoQuad != null)
         {
-            StopCoroutine(pulseCoroutine);
-            pulseCoroutine = null;
-            if (targetObject != null)
-            {
-                targetObject.localScale = Vector3.one; // Reset scale
-            }
+            if (videoPlayer != null && videoPlayer.isPlaying)
+                videoPlayer.Stop();
+
+            imageQuad.SetActive(true);
+            videoQuad.SetActive(false);
         }
     }
+
+
+    // Define thresholds (squared)
+    float triggerDistance = 1.5f;     // 1 meter
+    float exitDistance = 1.5f;      // 1 meter
 
 
 
     private void Update()
     {
+        float sqrDistance = (Camera.main.transform.position - targetObject.position).sqrMagnitude;
+        float sqrTrigger = triggerDistance * triggerDistance;
+        float sqrExit = exitDistance * exitDistance;
         Debug.Log(currentState.ToString());
         switch (currentState)
         {
             case ProximityState.Idle:
                 // Waiting for player to enter the zone
-                StopPulsing();
+                // StopPulsing();
+                StopVideo();
                 break;
 
             case ProximityState.EnteredZone:
@@ -113,8 +159,9 @@ public class ProximityZone : MonoBehaviour
             case ProximityState.MeasuringDistanceEnter:
                 // LogDistance(gameObject.transform);
                 // Debug.Log((Camera.main.transform.position - gameObject.transform.position).magnitude.ToString());
-                StopPulsing();
-                if ((Camera.main.transform.position - gameObject.transform.position).magnitude < 1f)
+                // StopPulsing();
+                StopVideo();
+                if (sqrDistance < sqrTrigger)
                 {
                     // If the player is close enough to the target object, transition to Triggered
                     currentState = ProximityState.Triggered;
@@ -126,14 +173,15 @@ public class ProximityZone : MonoBehaviour
             case ProximityState.Triggered:
                 // Triggered state logic
                 // Debug.Log("Unity event triggered!");
-                StartPulsing();
+                // StartPulsing();
+                StartVideo();
                 currentState = ProximityState.MeasuringDistanceExit;
                 break;
 
             case ProximityState.MeasuringDistanceExit:
                 // LogDistance(gameObject.transform);
                 // Debug.Log((Camera.main.transform.position - gameObject.transform.position).magnitude.ToString());
-                if ((Camera.main.transform.position - gameObject.transform.position).magnitude > 1f)
+                if (sqrDistance > sqrExit)
                 {
                     // If the player is far enough from the target object, transition to ExitedZone
                     // handle triggered exit event here
@@ -152,25 +200,25 @@ public class ProximityZone : MonoBehaviour
         // This method can be used for additional logic if needed
     }
 
-    private IEnumerator PulseScale(Transform obj, float minScale, float maxScale, float speed)
-    {
-        float t = 0f;
-        bool growing = true;
+    // private IEnumerator PulseScale(Transform obj, float minScale, float maxScale, float speed)
+    // {
+    //     float t = 0f;
+    //     bool growing = true;
 
-        while (true)
-        {
-            t += Time.deltaTime * speed;
-            float scale = growing ? Mathf.Lerp(minScale, maxScale, t) : Mathf.Lerp(maxScale, minScale, t);
-            obj.localScale = Vector3.one * scale;
+    //     while (true)
+    //     {
+    //         t += Time.deltaTime * speed;
+    //         float scale = growing ? Mathf.Lerp(minScale, maxScale, t) : Mathf.Lerp(maxScale, minScale, t);
+    //         obj.localScale = Vector3.one * scale;
 
-            if (t >= 1f)
-            {
-                t = 0f;
-                growing = !growing;
-            }
+    //         if (t >= 1f)
+    //         {
+    //             t = 0f;
+    //             growing = !growing;
+    //         }
 
-            yield return null;
-        }
-    }
+    //         yield return null;
+    //     }
+    // }
 
 }
