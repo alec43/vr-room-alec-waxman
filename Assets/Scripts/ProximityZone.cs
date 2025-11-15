@@ -161,6 +161,7 @@ public class ProximityZone : MonoBehaviour
                 // Debug.Log((Camera.main.transform.position - gameObject.transform.position).magnitude.ToString());
                 // StopPulsing();
                 StopVideo();
+                // ^ move this to measuring distance exit
                 if (sqrDistance < sqrTrigger)
                 {
                     // If the player is close enough to the target object, transition to Triggered
