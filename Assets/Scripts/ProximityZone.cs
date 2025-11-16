@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Video;
+using MarksAssets.VideoPlayerWebGL;
 
 [RequireComponent(typeof(BoxCollider))]
 public class ProximityZone : MonoBehaviour
@@ -10,7 +11,7 @@ public class ProximityZone : MonoBehaviour
 
     // private Coroutine pulseCoroutine;
 
-    public VideoPlayer videoPlayer;
+    public VideoPlayerWebGL videoPlayer;
 
     public GameObject videoQuad; // The animated version
 
@@ -26,27 +27,23 @@ public class ProximityZone : MonoBehaviour
     }
     public ProximityState currentState = ProximityState.Idle;
 
+
     private void Start()
     {
-        // Ensure the BoxCollider is set as a trigger
         BoxCollider box = GetComponent<BoxCollider>();
         if (!box.isTrigger)
         {
-            Debug.LogWarning("BoxCollider is not set as a trigger. Setting isTrigger = true.");
             box.isTrigger = true;
-        }
-
-        if (targetObject == null)
-        {
-            Debug.LogError("Target object is not assigned!");
         }
 
         if (videoQuad != null)
         {
-            videoPlayer = videoQuad.GetComponent<VideoPlayer>();
-            videoQuad.SetActive(false); // start hidden
+            videoPlayer = videoQuad.GetComponent<VideoPlayerWebGL>();
+            videoQuad.SetActive(false);  // start hidden
+            imageQuad.SetActive(true);
         }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -112,7 +109,7 @@ public class ProximityZone : MonoBehaviour
             videoQuad.SetActive(true);
             imageQuad.SetActive(false);
 
-            if (videoPlayer != null && !videoPlayer.isPlaying)
+            if (videoPlayer != null)
                 videoPlayer.Play();
         }
     }
@@ -121,7 +118,7 @@ public class ProximityZone : MonoBehaviour
     {
         if (videoQuad != null)
         {
-            if (videoPlayer != null && videoPlayer.isPlaying)
+            if (videoPlayer != null)
                 videoPlayer.Stop();
 
             imageQuad.SetActive(true);
