@@ -692,7 +692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: 1
-  URL: https://alec43.github.io/vr-room-alec-waxman/Assets/Paintings/Videos/into_the_light.mp4
+  URL: https://d12ahs40dz7bc1.cloudfront.net/into_the_light.mp4
   fileName: Assets/_Course Library/Video/Video_Unity-for-everyone.mp4
   autoplay: 0
   loop: 1
@@ -703,7 +703,7 @@ MonoBehaviour:
   playbackSpeed: 1
   targetTexture: {fileID: 8400000, guid: 0e647d24a207a8941b6784526b821ea7, type: 2}
   crossOrigin: 1
-  events: 32
+  events: 0
   canplay:
     m_PersistentCalls:
       m_Calls: []
@@ -823,7 +823,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1109621648
 MonoBehaviour:
   m_ObjectHideFlags: 0
