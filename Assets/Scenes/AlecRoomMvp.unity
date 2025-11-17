@@ -703,10 +703,22 @@ MonoBehaviour:
   playbackSpeed: 1
   targetTexture: {fileID: 8400000, guid: 0e647d24a207a8941b6784526b821ea7, type: 2}
   crossOrigin: 1
-  events: 0
+  events: 1
   canplay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 710610763}
+        m_TargetAssemblyTypeName: ProximityZone, Assembly-CSharp
+        m_MethodName: OnVideoReady
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: OnVideoReady
+          m_BoolArgument: 0
+        m_CallState: 1
   canplaythrough:
     m_PersistentCalls:
       m_Calls: []

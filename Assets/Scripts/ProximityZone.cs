@@ -25,6 +25,13 @@ public class ProximityZone : MonoBehaviour
     }
     public ProximityState currentState = ProximityState.Idle;
 
+    private IEnumerator InitializeQuad()
+    {
+        yield return null; // let VideoPlayerWebGL.Start() run
+        videoQuad.SetActive(false);
+        imageQuad.SetActive(true);
+    }
+
 
     private void Start()
     {
@@ -37,8 +44,7 @@ public class ProximityZone : MonoBehaviour
         if (videoQuad != null)
         {
             videoPlayer = videoQuad.GetComponent<VideoPlayerWebGL>();
-            videoQuad.SetActive(false);  // start hidden
-            imageQuad.SetActive(true);
+            StartCoroutine(InitializeQuad());
         }
     }
 
@@ -77,15 +83,28 @@ public class ProximityZone : MonoBehaviour
         Debug.Log($"Distance to target: {distance:F2} meters");
     }
 
+    private bool videoReady = false;
+
+    public void OnVideoReady()
+    {
+        videoReady = true;
+        Debug.Log("Video READY from WebGL!");
+    }
+
+
     private void StartVideo()
     {
+        if (!videoReady)
+        {
+            Debug.Log("Video not ready yet…");
+            return;
+        }
         if (videoQuad != null)
         {
             videoQuad.SetActive(true);
             imageQuad.SetActive(false);
 
-            if (videoPlayer != null)
-                videoPlayer.Play();
+            videoPlayer?.Play();
         }
     }
 
@@ -93,8 +112,7 @@ public class ProximityZone : MonoBehaviour
     {
         if (videoQuad != null)
         {
-            if (videoPlayer != null)
-                videoPlayer.Stop();
+            videoPlayer?.Stop();
 
             imageQuad.SetActive(true);
             videoQuad.SetActive(false);
