@@ -4,17 +4,17 @@ public class XRSimulatorToggler : MonoBehaviour
 {
     [Header("Scene References")]
     public GameObject webXRCameraSet;
-    public GameObject cameraOffsetGroup;
-    public GameObject xrDeviceSimulator; // 👈 add your simulator here
-    public GameObject webXRManager; // optional
+    public GameObject desktopCamera;   // Your Camera Offset Main Camera
+    public GameObject xrDeviceSimulator;
+    public GameObject webXRManager;
 
     private bool isInVR = false;
 
     private void Awake()
     {
-        // Auto-find objects if not assigned
+        // Auto-find
         if (!webXRCameraSet) webXRCameraSet = GameObject.Find("WebXRCameraSet");
-        if (!cameraOffsetGroup) cameraOffsetGroup = GameObject.Find("Camera Offset");
+        if (!desktopCamera) desktopCamera = GameObject.Find("Main Camera");
         if (!xrDeviceSimulator) xrDeviceSimulator = GameObject.Find("XR Device Simulator");
         if (!webXRManager) webXRManager = GameObject.Find("WebXRManager");
 
@@ -34,7 +34,6 @@ public class XRSimulatorToggler : MonoBehaviour
 
     private bool IsInVRSession()
     {
-        // WebXR-based detection
         if (webXRManager)
         {
             var manager = webXRManager.GetComponent("WebXRManager");
@@ -43,30 +42,26 @@ public class XRSimulatorToggler : MonoBehaviour
                 var prop = manager.GetType().GetProperty("XRState");
                 if (prop != null)
                 {
-                    var stateValue = prop.GetValue(manager, null);
-                    return stateValue != null && stateValue.ToString() == "VR";
+                    var value = prop.GetValue(manager, null);
+                    return value != null && value.ToString() == "VR";
                 }
             }
         }
 
-        // Fallback XR detection
-#if UNITY_XR_MANAGEMENT
-        return UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.activeLoader != null;
-#else
-        return UnityEngine.XR.XRSettings.isDeviceActive;
-#endif
+        return false;
     }
 
     private void SetCameraMode(bool inVR)
     {
-        if (webXRCameraSet) webXRCameraSet.SetActive(inVR);
-        if (cameraOffsetGroup) cameraOffsetGroup.SetActive(!inVR);
+        // CameraOffset ALWAYS stays active
 
-        // 🧠 Simulator should only be active when NOT in VR
+        webXRCameraSet.SetActive(inVR);
+        desktopCamera.SetActive(!inVR);
+
         if (xrDeviceSimulator) xrDeviceSimulator.SetActive(!inVR);
 
         Debug.Log(inVR
-            ? "✅ Entered VR mode — using WebXR camera, disabling simulator."
-            : "💻 Exited VR — enabling simulator, using normal camera.");
+            ? "Entered VR mode — WebXR camera active."
+            : "Desktop mode — simulator and desktop camera active.");
     }
 }
