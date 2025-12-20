@@ -131,7 +131,7 @@ public class ProximityZone : MonoBehaviour
         float sqrDistance = (Camera.main.transform.position - targetObject.position).sqrMagnitude;
         float sqrTrigger = triggerDistance * triggerDistance;
         float sqrExit = exitDistance * exitDistance;
-        Debug.Log(currentState.ToString());
+        // Debug.Log(currentState.ToString());
         switch (currentState)
         {
             case ProximityState.Idle:
