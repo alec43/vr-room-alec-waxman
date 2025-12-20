@@ -4,7 +4,7 @@ public class XRSimulatorToggler : MonoBehaviour
 {
     [Header("Scene References")]
     public GameObject webXRCameraSet;
-    public GameObject cameraOffsetGroup;
+    public GameObject desktopPlayer;
     public GameObject xrDeviceSimulator; // 👈 add your simulator here
     public GameObject webXRManager; // optional
 
@@ -14,7 +14,7 @@ public class XRSimulatorToggler : MonoBehaviour
     {
         // Auto-find objects if not assigned
         if (!webXRCameraSet) webXRCameraSet = GameObject.Find("WebXRCameraSet");
-        if (!cameraOffsetGroup) cameraOffsetGroup = GameObject.Find("Camera Offset");
+        if (!desktopPlayer) desktopPlayer = GameObject.Find("DesktopPlayer");
         if (!xrDeviceSimulator) xrDeviceSimulator = GameObject.Find("XR Device Simulator");
         if (!webXRManager) webXRManager = GameObject.Find("WebXRManager");
 
@@ -60,7 +60,7 @@ public class XRSimulatorToggler : MonoBehaviour
     private void SetCameraMode(bool inVR)
     {
         if (webXRCameraSet) webXRCameraSet.SetActive(inVR);
-        if (cameraOffsetGroup) cameraOffsetGroup.SetActive(!inVR);
+        if (desktopPlayer) desktopPlayer.SetActive(!inVR);
 
         // 🧠 Simulator should only be active when NOT in VR
         if (xrDeviceSimulator) xrDeviceSimulator.SetActive(!inVR);
