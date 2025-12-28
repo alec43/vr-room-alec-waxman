@@ -55,3 +55,6 @@ Desktop.ini
 # Optional: Ignore specific files or folders within Assets if they are large or temporary
 # Assets/SomeLargeAssetFolder/
 # Assets/TemporaryFiles/
+
+Utils/aws_secrets.env
+Utils/upload_env_dev.sh
