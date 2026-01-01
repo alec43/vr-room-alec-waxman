@@ -7,6 +7,8 @@ public class GalleryEventHub : MonoBehaviour
     [Header("Gallery Events")]
     public GalleryUnityEvent onGalleryEvent;
 
+    private readonly string sessionId = System.Guid.NewGuid().ToString();
+
     private void Awake()
     {
         Debug.Log("GalleryEventHub Awake called");
@@ -23,10 +25,10 @@ public class GalleryEventHub : MonoBehaviour
             onGalleryEvent = new GalleryUnityEvent();
     }
 
-    public void Emit(string eventType, string sourceId)
+    public void Emit(GalleryEventType eventType, string sourceId)
     {
         // Debug.Log($"Emitting event: {eventType} from {sourceId}");
-        var e = new GalleryEvent(eventType, sourceId);
+        var e = new GalleryEvent(eventType, sourceId, sessionId);
         onGalleryEvent.Invoke(e);
     }
 }
