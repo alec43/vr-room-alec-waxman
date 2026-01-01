@@ -28,7 +28,7 @@ public class GalleryEventObserver : MonoBehaviour
     public void HandleEvent(GalleryEvent e)
     {
         Debug.Log(
-            $"[GalleryEvent] {e.eventType} | {e.sourceId} | {e.timestamp}"
+            $"GalleryEventObserver received event: {e.ToString()}"
         );
     }
 }

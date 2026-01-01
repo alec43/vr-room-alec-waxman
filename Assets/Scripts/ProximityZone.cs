@@ -55,7 +55,7 @@ public class ProximityZone : MonoBehaviour
         if (other.CompareTag("MainCamera"))
         {
             currentState = ProximityState.EnteredZone;
-            GalleryEventHub.Instance.Emit(GalleryEventType.PROXIMITY_ZONE_ENTER, "zone_1");
+            GalleryEventHub.Instance.Emit.ProximityEvent(ProximityEventType.Enter, "zone_1");
         }
     }
 
@@ -73,7 +73,7 @@ public class ProximityZone : MonoBehaviour
         {
             Debug.Log("Player left the proximity zone!");
             currentState = ProximityState.ExitedZone;
-            GalleryEventHub.Instance.Emit(GalleryEventType.PROXIMITY_ZONE_EXIT, "zone_1");
+            GalleryEventHub.Instance.Emit.ProximityEvent(ProximityEventType.Exit, "zone_1");
         }
     }
 
@@ -110,7 +110,7 @@ public class ProximityZone : MonoBehaviour
 
             videoPlayer?.Play();
             isPlaying = true;
-            GalleryEventHub.Instance.Emit(GalleryEventType.VIDEO_PLAY, "video_1");
+            GalleryEventHub.Instance.Emit.VideoEvent(VideoEventType.Play, "video_1");
         }
     }
 
@@ -119,7 +119,7 @@ public class ProximityZone : MonoBehaviour
         if (videoQuad != null)
         {
             videoPlayer?.Stop();
-            if (isPlaying) GalleryEventHub.Instance.Emit(GalleryEventType.VIDEO_STOP, "video_1");
+            if (isPlaying) GalleryEventHub.Instance.Emit.VideoEvent(VideoEventType.Stop, "video_1");
             isPlaying = false;
 
             imageQuad.SetActive(true);
