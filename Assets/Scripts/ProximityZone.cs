@@ -55,6 +55,7 @@ public class ProximityZone : MonoBehaviour
         if (other.CompareTag("MainCamera"))
         {
             currentState = ProximityState.EnteredZone;
+            GalleryEventHub.Instance.Emit.ProximityEvent(ProximityEventType.Enter, "zone_1");
         }
     }
 
@@ -62,7 +63,7 @@ public class ProximityZone : MonoBehaviour
     {
         if (other.CompareTag("MainCamera"))
         {
-            LogDistance(other.transform);
+            // LogDistance(other.transform);
         }
     }
 
@@ -72,6 +73,7 @@ public class ProximityZone : MonoBehaviour
         {
             Debug.Log("Player left the proximity zone!");
             currentState = ProximityState.ExitedZone;
+            GalleryEventHub.Instance.Emit.ProximityEvent(ProximityEventType.Exit, "zone_1");
         }
     }
 
@@ -91,6 +93,8 @@ public class ProximityZone : MonoBehaviour
         Debug.Log("Video READY from WebGL!");
     }
 
+    private bool isPlaying = false;
+
 
     private void StartVideo()
     {
@@ -105,6 +109,8 @@ public class ProximityZone : MonoBehaviour
             imageQuad.SetActive(false);
 
             videoPlayer?.Play();
+            isPlaying = true;
+            GalleryEventHub.Instance.Emit.VideoEvent(VideoEventType.Play, "video_1");
         }
     }
 
@@ -113,6 +119,8 @@ public class ProximityZone : MonoBehaviour
         if (videoQuad != null)
         {
             videoPlayer?.Stop();
+            if (isPlaying) GalleryEventHub.Instance.Emit.VideoEvent(VideoEventType.Stop, "video_1");
+            isPlaying = false;
 
             imageQuad.SetActive(true);
             videoQuad.SetActive(false);
@@ -137,7 +145,7 @@ public class ProximityZone : MonoBehaviour
             case ProximityState.Idle:
                 // Waiting for player to enter the zone
                 // StopPulsing();
-                StopVideo();
+                // StopVideo();
                 break;
 
             case ProximityState.EnteredZone:
@@ -146,7 +154,7 @@ public class ProximityZone : MonoBehaviour
                 break;
 
             case ProximityState.MeasuringDistanceEnter:
-                StopVideo();
+                // StopVideo();
                 // ^ move this to measuring distance exit
                 if (sqrDistance < sqrTrigger)
                 {
@@ -168,6 +176,7 @@ public class ProximityZone : MonoBehaviour
                 {
                     // If the player is far enough from the target object, transition to ExitedZone
                     // handle triggered exit event here
+                    StopVideo();
                     currentState = ProximityState.MeasuringDistanceEnter;
                 }
 
