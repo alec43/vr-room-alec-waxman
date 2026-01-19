@@ -17,10 +17,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/AlecRoomMvp_3.unity
     guid: f807cecd19bab4219b40c067df7ff555
-  - enabled: 1
+  - enabled: 0
     path: Assets/AK Studio Art/Art Gallery Vol.3/Scenes/Demo.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Gallery.unity
     guid: 8fed9e6a536344dc09e3c914aba288d0
   m_configObjects:
