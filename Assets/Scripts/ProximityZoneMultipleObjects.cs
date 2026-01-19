@@ -205,8 +205,10 @@ public class ProximityZoneMultipleObjects : MonoBehaviour
 
 
     // Define thresholds (squared)
-    float triggerDistance = 2f;     // 2 meters
-    float exitDistance = 2f;      // 2 meters
+    [Tooltip("Distance to trigger the video (in meters)")]
+    public float triggerDistance = 2f;     // 2 meters
+    [Tooltip("Distance to stop the video (in meters)")]
+    public float exitDistance = 2f;      // 2 meters
 
     private float GetMinSqrDistance()
     {

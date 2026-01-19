@@ -135,8 +135,11 @@ public class ProximityZone : MonoBehaviour
 
 
     // Define thresholds (squared)
-    float triggerDistance = 1.5f;     // 1 meter
-    float exitDistance = 1.5f;      // 1 meter
+    
+    [Tooltip("Distance to trigger the video (in meters)")]
+    public float triggerDistance = 1.5f;     // 1 meter
+    [Tooltip("Distance to stop the video (in meters)")]
+    public float exitDistance = 1.5f;      // 1 meter
 
 
 
