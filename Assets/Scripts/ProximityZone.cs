@@ -6,7 +6,7 @@ using MarksAssets.VideoPlayerWebGL;
 [RequireComponent(typeof(BoxCollider))]
 public class ProximityZone : MonoBehaviour
 {
-    [Tooltip("The target object (sphere) to measure distance to")]
+    [Tooltip("The target object to measure distance to")]
     public Transform targetObject;
 
     public VideoPlayerWebGL videoPlayer;
@@ -14,6 +14,12 @@ public class ProximityZone : MonoBehaviour
     public GameObject videoQuad; // The animated version
 
     public GameObject imageQuad;
+
+    [Header("Event IDs")]
+    [Tooltip("Unique ID for this proximity zone")]
+    public string zoneId = "zone_1";
+    [Tooltip("Unique ID for the video in this zone")]
+    public string videoId = "video_1";
     public enum ProximityState
     {
         Idle,
@@ -55,7 +61,7 @@ public class ProximityZone : MonoBehaviour
         if (other.CompareTag("MainCamera"))
         {
             currentState = ProximityState.EnteredZone;
-            GalleryEventHub.Instance.Emit.ProximityEvent(ProximityEventType.Enter, "zone_1");
+            GalleryEventHub.Instance.Emit.ProximityEvent(ProximityEventType.Enter, zoneId);
         }
     }
 
@@ -73,7 +79,7 @@ public class ProximityZone : MonoBehaviour
         {
             Debug.Log("Player left the proximity zone!");
             currentState = ProximityState.ExitedZone;
-            GalleryEventHub.Instance.Emit.ProximityEvent(ProximityEventType.Exit, "zone_1");
+            GalleryEventHub.Instance.Emit.ProximityEvent(ProximityEventType.Exit, zoneId);
         }
     }
 
@@ -110,7 +116,7 @@ public class ProximityZone : MonoBehaviour
 
             videoPlayer?.Play();
             isPlaying = true;
-            GalleryEventHub.Instance.Emit.VideoEvent(VideoEventType.Play, "video_1");
+            GalleryEventHub.Instance.Emit.VideoEvent(VideoEventType.Play, videoId);
         }
     }
 
@@ -119,7 +125,7 @@ public class ProximityZone : MonoBehaviour
         if (videoQuad != null)
         {
             videoPlayer?.Stop();
-            if (isPlaying) GalleryEventHub.Instance.Emit.VideoEvent(VideoEventType.Stop, "video_1");
+            if (isPlaying) GalleryEventHub.Instance.Emit.VideoEvent(VideoEventType.Stop, videoId);
             isPlaying = false;
 
             imageQuad.SetActive(true);
