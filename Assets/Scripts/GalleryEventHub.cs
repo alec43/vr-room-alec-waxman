@@ -43,16 +43,16 @@ public class GalleryEventHub : MonoBehaviour
         }
 
         // Emit a proximity event
-        public void ProximityEvent(ProximityEventType eventType, string sourceId, string zoneId = null)
+        public void ProximityEvent(ProximityEventType eventType, string zoneId = null)
         {
-            var e = new ProximityEvent(eventType, sourceId, parent.sessionId, zoneId);
+            var e = new ProximityEvent(eventType, zoneId, parent.sessionId, zoneId);
             parent.onGalleryEvent.Invoke(e);
         }
 
         // Emit a video event
-        public void VideoEvent(VideoEventType eventType, string sourceId, string videoName = null)
+        public void VideoEvent(VideoEventType eventType, string videoName = null)
         {
-            var e = new VideoEvent(eventType, sourceId, parent.sessionId, videoName);
+            var e = new VideoEvent(eventType, videoName, parent.sessionId, videoName);
             parent.onGalleryEvent.Invoke(e);
         }
     }
