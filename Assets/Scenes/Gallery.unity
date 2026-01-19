@@ -175,6 +175,33 @@ Transform:
   - {fileID: 1273150755}
   m_Father: {fileID: 240019947}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &22592190 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1590556040}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &22592194
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22592190}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.00437892, y: 0.02002931, z: 0.04}
+  m_Center: {x: 0.00000023003668, y: 0.000014365185, z: -0.000022884691}
 --- !u!1001 &27460433
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13753,6 +13780,88 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.0000014, y: 3.719468, z: 0.30000004}
   m_Center: {x: 0, y: 1.8791707, z: 0}
+--- !u!1001 &1590556040
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.96
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.678
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      propertyPath: m_Name
+      value: Meshy_AI_Velvet_Rope_Barrier_0119134836_texture
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d15dd095ca7e04f4f9b50c5a30a52ee3,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 22592194}
+  m_SourcePrefab: {fileID: 100100000, guid: d15dd095ca7e04f4f9b50c5a30a52ee3, type: 3}
 --- !u!4 &1592655545 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2917083168686243030, guid: b2ed594d18f61354094f93f4764b5294,
@@ -18177,3 +18286,4 @@ SceneRoots:
   - {fileID: 743350245}
   - {fileID: 755360600}
   - {fileID: 71400068}
+  - {fileID: 1590556040}
